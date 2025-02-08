@@ -89,20 +89,8 @@
             if (guess === random) {
                 result.innerText = "🎉 You guessed it right!";
                 video.style.display = "block"; 
-                video.play(); 
-
-                
-                if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                } else if (video.mozRequestFullScreen) { 
-                    video.mozRequestFullScreen();
-                } else if (video.webkitRequestFullscreen) { 
-                    video.webkitRequestFullscreen();
-                } else if (video.msRequestFullscreen) { 
-                    video.msRequestFullscreen();
-                }
-
-                return;
+                video.play();
+                 return;
             }
 
             if (count === max) {
