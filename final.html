@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        #input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+        #submit {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        #submit:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #video {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <h1>Guess the Number</h1>
+    <p>Guess a number between 1 and 100</p>
+    <input type="text" id="input" placeholder="Enter the number">
+    <button id="submit" onclick="game()">Submit</button>
+    <div id="result"></div>
+    <video id="video" controls>
+        <source src="win.mp4.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        let random = Math.floor(Math.random() * 100 + 1);
+        let count = 0;
+        let max = 7;
+
+        function game() {
+            let inputField = document.getElementById("input");
+            let guess = Number(inputField.value);
+            let result = document.getElementById("result");
+            let video = document.getElementById("video");
+
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                result.innerText = "⚠️ Enter a valid number between 1 and 100!";
+                return;
+            }
+
+            count++;
+
+            if (guess === random) {
+                result.innerText = "🎉 You guessed it right!";
+                video.style.display = "block"; 
+                video.play(); 
+
+                
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.mozRequestFullScreen) { 
+                    video.mozRequestFullScreen();
+                } else if (video.webkitRequestFullscreen) { 
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) { 
+                    video.msRequestFullscreen();
+                }
+
+                return;
+            }
+
+            if (count === max) {
+                result.innerText = ` You are out of chances! The correct number was ${random}.`;
+                return;
+            }
+
+            if (guess > random) {
+                result.innerText = `📈 Too high! Attempts left: ${max - count}`;
+            } else {
+                result.innerText = `📉 Too low! Attempts left: ${max - count}`;
+            }
+
+            inputField.value = "";
+        }
+    </script>
+</body>
+</html>
